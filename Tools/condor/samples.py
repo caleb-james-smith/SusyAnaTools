@@ -3,9 +3,12 @@ from ctypes import c_char_p
 from ctypes import c_double
 from ctypes import POINTER 
 
+from os import environ
+
 class SampleCollection:
     def __init__(self):
         self.lib = cdll.LoadLibrary('../obj/samplesModule.so')
+        #self.lib = cdll.LoadLibrary(environ["CMSSW_BASE"] + "/src/SusyAnaTools/Tools/obj/samplesModule.so"
         self.obj = self.lib.SC_new()
         self.lib.SC_samples.restype = POINTER(c_char_p)
         self.lib.SC_samples_names.restype = POINTER(c_char_p)
