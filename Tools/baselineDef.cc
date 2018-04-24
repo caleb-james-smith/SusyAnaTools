@@ -15,28 +15,29 @@ BaselineVessel::BaselineVessel(NTupleReader &tr_, const std::string specializati
   ttPtr(NULL),
   WMassCorFile(NULL)
 {
-  bToFake               = 1;
-  debug                 = false;
-  incZEROtop            = false;
-  UseLepCleanJet        = false;
-  jetVecLabel           = "jetsLVec";
-  CSVVecLabel           = "recoJetsBtag_0";
-  METLabel              = "met";
-  METPhiLabel           = "metphi";
-  jetVecLabelAK8        = "ak8JetsLVec";
-  qgLikehoodLabel       = "qgLikelihood";
-  muonsFlagIDLabel      = "muonsFlagMedium";  //TODO: moving to loose ID for 2017
-  elesFlagIDLabel       = "elesFlagVeto";
-  toptaggerCfgFile      = "TopTagger.cfg";
-  doIsoTrksVeto         = true;
-  doMuonVeto            = true;
-  doEleVeto             = true;
-  doMET                 = true;
-  dodPhis               = true;
-  passBaseline          = true;
-  passBaselineNoTagMT2  = true;
-  passBaselineNoTag     = true;
-  passBaselineNoLepVeto = true;
+  bToFake                  = 1;
+  debug                    = false;
+  incZEROtop               = false;
+  UseLepCleanJet           = false;
+  jetVecLabel              = "jetsLVec";
+  CSVVecLabel              = "recoJetsBtag_0";
+  METLabel                 = "met";
+  METPhiLabel              = "metphi";
+  jetVecLabelAK8           = "ak8JetsLVec";
+  qgLikehoodLabel          = "qgLikelihood";
+  muonsFlagIDLabel         = "muonsFlagMedium";  //TODO: moving to loose ID for 2017
+  elesFlagIDLabel          = "elesFlagVeto";
+  toptaggerCfgFile         = "TopTagger.cfg";
+  doIsoTrksVeto            = true;
+  doMuonVeto               = true;
+  doEleVeto                = true;
+  doMET                    = true;
+  dodPhis                  = true;
+  passBaseline             = true;
+  passBaselineNoTagMT2     = true;
+  passBaselineNoTag        = true;
+  passBaselineNoLepVeto    = true;
+  passBaselineSingleLepton = true;
   metLVec.SetPtEtaPhiM(0, 0, 0, 0);
 
   if(filterString.compare("fastsim") ==0) isfastsim = true; else isfastsim = false; 
@@ -305,10 +306,11 @@ bool BaselineVessel::PassTopTagger()
 void BaselineVessel::PassBaseline()
 {
   // Initial value
-  passBaseline          = true;
-  passBaselineNoTagMT2  = true;
-  passBaselineNoTag     = true;
-  passBaselineNoLepVeto = true;
+  passBaseline             = true;
+  passBaselineNoTagMT2     = true;
+  passBaselineNoTag        = true;
+  passBaselineNoLepVeto    = true;
+  passBaselineSingleLepton = true;
 
 
   // Form TLorentzVector of MET
@@ -437,6 +439,7 @@ void BaselineVessel::PassBaseline()
   tr->registerDerivedVar("passBaselineNoTagMT2" + firstSpec, passBaselineNoTagMT2);
   tr->registerDerivedVar("passBaselineNoTag" + firstSpec, passBaselineNoTag);
   tr->registerDerivedVar("passBaselineNoLepVeto" + firstSpec, passBaselineNoLepVeto);
+  tr->registerDerivedVar("passBaselineSingleLepton" + firstSpec, passBaselineSingleLepton);
 
   tr->registerDerivedVar("best_had_brJet_MT2" + firstSpec,    MT2);
 

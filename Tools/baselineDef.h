@@ -78,6 +78,7 @@ public:
     bool passBaselineNoTagMT2;
     bool passBaselineNoTag;
     bool passBaselineNoLepVeto;
+    bool passBaselineSingleLepton;
 
 
     BaselineVessel(NTupleReader &tr_, const std::string specialization = "", const std::string filterString = "");
