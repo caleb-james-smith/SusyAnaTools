@@ -404,8 +404,8 @@ void BaselineVessel::PassBaseline()
   if( debug ) std::cout<<"passFastsimEventFilterFunc : "<<passFastsimEventFilterFunc()<<"  passBaseline : "<<passBaseline<<std::endl;
 
   //Single Lepton Control Region
-  if ( !passBaseline )                  passBaselineSingleLepton = false;
-  if ( !(nElectrons + nMuons == 1) )    passBaselineSingleLepton = false;
+  if ( !passBaselineNoLepVeto )     passBaselineSingleLepton = false;
+  if ( nElectrons + nMuons != 1 )   passBaselineSingleLepton = false;
 
   // Register all the calculated variables
   tr->registerDerivedVar("nMuons_CUT" + firstSpec, nMuons);
