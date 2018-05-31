@@ -38,6 +38,7 @@ BaselineVessel::BaselineVessel(NTupleReader &tr_, const std::string specializati
   passBaselineNoTag        = true;
   passBaselineNoLepVeto    = true;
   passBaselineSingleLepton = true;
+  passBaselineDoubleLepton = true;
   metLVec.SetPtEtaPhiM(0, 0, 0, 0);
 
   if(filterString.compare("fastsim") ==0) isfastsim = true; else isfastsim = false; 
@@ -311,6 +312,7 @@ void BaselineVessel::PassBaseline()
   passBaselineNoTag        = true;
   passBaselineNoLepVeto    = true;
   passBaselineSingleLepton = true;
+  passBaselineDoubleLepton = true;
 
 
   // Form TLorentzVector of MET
@@ -407,6 +409,10 @@ void BaselineVessel::PassBaseline()
   if ( !passBaselineNoLepVeto )     passBaselineSingleLepton = false;
   if ( nElectrons + nMuons != 1 )   passBaselineSingleLepton = false;
 
+  //Double Lepton Control Region
+  if ( !passBaselineNoLepVeto )                                                 passBaselineDoubleLepton = false;
+  if ( !(nElectrons == 2 && nMuons == 0) && !(nElectrons == 0 && nMuons == 2) ) passBaselineDoubleLepton = false;
+
   // Register all the calculated variables
   tr->registerDerivedVar("nMuons_CUT" + firstSpec, nMuons);
   tr->registerDerivedVar("nElectrons_CUT" + firstSpec, nElectrons);
@@ -444,6 +450,7 @@ void BaselineVessel::PassBaseline()
   tr->registerDerivedVar("passBaselineNoTag" + firstSpec, passBaselineNoTag);
   tr->registerDerivedVar("passBaselineNoLepVeto" + firstSpec, passBaselineNoLepVeto);
   tr->registerDerivedVar("passBaselineSingleLepton" + firstSpec, passBaselineSingleLepton);
+  tr->registerDerivedVar("passBaselineDoubleLepton" + firstSpec, passBaselineDoubleLepton);
 
   tr->registerDerivedVar("best_had_brJet_MT2" + firstSpec,    MT2);
 
